@@ -18,10 +18,10 @@ public class SM_Testing : MonoBehaviour
     {
         if (SwipeManager.Instance.SwipeOn)
         {
-            test = SwipeManager.Instance.GetVector3Position(transform.position.y);
+            test = SwipeManager.Instance.GetRotationTargetPoint(transform.position.y);
             //var target = Instantiate(targetRotation, SwipeManager.Instance.GetVector3Position(transform.position.y), Quaternion.identity, this.transform);
             //Debug.Log("targetRotation = " + SwipeManager.Instance.GetVector3Position(transform.position.y).ToString());
-            transform.LookAt(SwipeManager.Instance.GetVector3Position(transform.position.y));
+            transform.LookAt(SwipeManager.Instance.GetRotationTargetPoint(transform.position.y));
             //transform.Translate(Vector3.forward);
         }
         if(Input.GetKeyDown(KeyCode.Escape))
