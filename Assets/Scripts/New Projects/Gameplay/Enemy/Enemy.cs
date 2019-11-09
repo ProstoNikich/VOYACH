@@ -10,16 +10,12 @@ public class Enemy : MonoBehaviour
     public int HP { get => hp; }
     public int DMG { get => dmg; } //!!!
 
-    protected TextMesh Stats;
-
     protected void Start()
     {
-        Stats = GetComponentInChildren<TextMesh>();
     }
 
     protected void Update()
     {
-        Stats.text = "HP:" + HP + " DMG:" + DMG; //такая запись не продуктивна (конкатинация строк)
         if (HP <= 0) Dead();
     }
 

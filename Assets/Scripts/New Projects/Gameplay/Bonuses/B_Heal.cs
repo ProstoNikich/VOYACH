@@ -8,7 +8,7 @@ public class B_Heal : MonoBehaviour, IBonus
 
     public void ActivateBonus(Player target)
     {
-        target.HP += addHP;
+        //target.HP += addHP;
         Debug.Log(this.gameObject.name + " - Бонус активирован!! ");
         Destroy(this.gameObject);
     }

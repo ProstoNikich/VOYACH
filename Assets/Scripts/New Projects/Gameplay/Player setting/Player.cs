@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [Header("Gameplay settings:")]
     [SerializeField] int hp = 10;
     [SerializeField] int dmg = 5;
+
     [Header("Timer damage settings:")]
     [SerializeField] float timerDamage = 5.0f;
     [SerializeField] float timerActionDamage = 2.0f;
@@ -16,7 +17,7 @@ public class Player : MonoBehaviour
 
     bool activetedActionTimer = false;
 
-    public int HP { get => hp; set => hp = value; }
+    public int HP { get => hp;  }
     public int DMG { get => dmg; }
     private static Coroutine poisionCoroutine = null;
 
@@ -36,23 +37,15 @@ public class Player : MonoBehaviour
         CheckTimer();        
         CheckAnim();
 
-        if (Input.GetKeyDown(KeyCode.W)){
-            Move(new Vector3(0, 0, 1));
-        }
-        if (Input.GetKeyDown(KeyCode.S)) {
-            Move(new Vector3(0, 0, -1));
-        }
-        if (Input.GetKeyDown(KeyCode.A)) {
-            Move(new Vector3(-1, 0, 0));
-        }
-        if (Input.GetKeyDown(KeyCode.D)) {
-            Move(new Vector3(1, 0, 0));
-        }
     }
 
+    /// <summary>
+    /// Данный метод служит "заглушкой" отсутствующей анимации. В дальнейм параметр bool activetedActionTimer 
+    /// должен быть изменён на булевский параметр у инматора отвучающий за анимацию. А этот метод должен быть удалён
+    /// </summary>
     private void CheckAnim()
     {
-        if (activetedActionTimer) Debug.LogError("Action PoisionDamage = null referens \n Скоро получишь урон"); //включаем анимацию
+        if (activetedActionTimer) Debug.LogWarning("Скоро получишь урон");                        //включаем анимацию
     }
 
     void CheckTimer()
@@ -67,14 +60,17 @@ public class Player : MonoBehaviour
 
     private IEnumerator PosionDamage()
     {
+        Debug.LogWarning("Урон от нехватки колы раз в " + cooldownPoisionDamage + " секунд!");   //включаем анимацию
         while (hp > 0)
         {
             DamageMy(damagePoision);
+            Debug.LogError("Урон от нехватки колы - " + damagePoision);
             yield return new WaitForSeconds(cooldownPoisionDamage);
         }
     }
     private void StopPoisionCoroutine()
     {
+        Debug.LogWarning("Таймер обновлен! \nПерестаём получать урон.");                        //Отключаем анимацию PosionDamage()
         if (poisionCoroutine != null)
         {
             poisionCoroutine = null;
@@ -91,36 +87,7 @@ public class Player : MonoBehaviour
         //Destroy(this);                                  //Уничтожаем этот модуль управления персонажем
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Enemy") CombatMove(transform.position, collision.gameObject.GetComponent<Enemy>());
-    }
-
-
-    void Move(Vector3 nextPosition)
-    {
-        if (!Physics.Raycast(transform.position, nextPosition, 1.0f))
-            transform.Translate(nextPosition); //если никого нет переходим туда
-        else
-        {
-            Collider[] targetObjects = Physics.OverlapBox(transform.position + nextPosition, new Vector3(0.1f, 0.1f, 0.1f));
-
-            if (targetObjects.Length != 1)
-                Debug.LogError("Ошибка в позиции назначения, найдено " + targetObjects.Length + " коллайдеров!!!");
-            else if (targetObjects[0].tag == "Enemy")
-                CombatMove(nextPosition, targetObjects[0].gameObject.GetComponent<Enemy>());
-            else if (targetObjects[0].tag == "Bonus")
-                targetObjects[0].gameObject.GetComponent<IBonus>().ActivateBonus(this);
-        }
-    }
-    
-    void CombatMove(Vector3 targetMove, Enemy enemy)
-    {
-        Figth(enemy);
-
-        if (!Physics.Raycast(transform.position, targetMove, 1.0f) || enemy.HP <= 0)
-            transform.Translate(targetMove); //если враг умер переходим туда
-    }
+   
     public void Figth(Enemy enemy)
     {
         hp -= enemy.DMG;
@@ -134,21 +101,3 @@ public class Player : MonoBehaviour
     }
 
 }
-
-
-
-
-
-/* При совершении хода:
- * чекаем клетку в которую идем
- * если она пустая - переходим в неё
- * если это враг
- *      Смотрим дмг/хп
- *      Производим битву
- *      Если враг жив то персонаж остаётся на месте
- *      Иначе перемещаемся в выбранную клетку
- *      Производим анимацию у персонажа и врага
- * если это бонус - подбираем, добавляем эффекты производим анимацию
- * Завершаем ход.
- * Мир производит изменения (враги ходят, появляются\исчезают бонусы)
- */
