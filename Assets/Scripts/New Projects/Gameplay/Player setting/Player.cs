@@ -9,13 +9,13 @@ public class Player : MonoBehaviour
     [SerializeField] int hp = 10;
     [SerializeField] int dmg = 5;
 
-    [Header("Timer damage settings:")]
-    [SerializeField] float timerDamage = 5.0f;
-    [SerializeField] float timerActionDamage = 2.0f;
-    [SerializeField] int damagePoision = 1;
-    [SerializeField] float cooldownPoisionDamage = 1;
+    [Header("Character fade time settings:")]
+    [SerializeField] float timer = 5.0f;
+    [SerializeField] float eventTime = 2.0f;
+    [SerializeField] int fadingDamage = 1;
+    [SerializeField] float cooldownFadingDamage = 1;
 
-    bool activetedActionTimer = false;
+    bool activetedActionTimer = false; // должен быть изменён на булевский параметр у анматора отвучающий за анимацию. А этот метод должен быть удалён
 
     public int HP { get => hp;  }
     public int DMG { get => dmg; }
@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
 
     /// <summary>
     /// Данный метод служит "заглушкой" отсутствующей анимации. В дальнейм параметр bool activetedActionTimer 
-    /// должен быть изменён на булевский параметр у инматора отвучающий за анимацию. А этот метод должен быть удалён
+    /// должен быть изменён на булевский параметр у анматора отвучающий за анимацию. А этот метод должен быть удалён
     /// </summary>
     private void CheckAnim()
     {
@@ -50,22 +50,22 @@ public class Player : MonoBehaviour
 
     void CheckTimer()
     {
-        timerDamage -= Time.deltaTime;
-        if (timerDamage <= timerActionDamage) activetedActionTimer = true;
+        timer -= Time.deltaTime;
+        if (timer <= eventTime) activetedActionTimer = true;
         else activetedActionTimer = false;
-        if (poisionCoroutine == null && timerDamage <= 0.0f ) 
+        if (poisionCoroutine == null && timer <= 0.0f ) 
             poisionCoroutine = StartCoroutine(PosionDamage());
-        else if (poisionCoroutine != null && timerDamage > 0) StopPoisionCoroutine();
+        else if (poisionCoroutine != null && timer > 0) StopPoisionCoroutine();
     }
 
     private IEnumerator PosionDamage()
     {
-        Debug.LogWarning("Урон от нехватки колы раз в " + cooldownPoisionDamage + " секунд!");   //включаем анимацию
+        Debug.LogWarning("Урон от нехватки колы раз в " + cooldownFadingDamage + " секунд!");   //включаем анимацию
         while (hp > 0)
         {
-            DamageMy(damagePoision);
-            Debug.LogError("Урон от нехватки колы - " + damagePoision);
-            yield return new WaitForSeconds(cooldownPoisionDamage);
+            DamageMy(fadingDamage);
+            Debug.LogError("Урон от нехватки колы - " + fadingDamage);
+            yield return new WaitForSeconds(cooldownFadingDamage);
         }
     }
     private void StopPoisionCoroutine()
@@ -77,16 +77,6 @@ public class Player : MonoBehaviour
             StopCoroutine(PosionDamage());
         }            
     }
-
-    private IEnumerator Dead(float timeDeadAnim)
-    {
-        //...                                           //запускаем анимацию
-        yield return new WaitForSeconds(timeDeadAnim);  //ждем
-        Time.timeScale = 0;                             //Ставим игру на паузу
-        //...                                           //Запускаем меню "смерти"
-        //Destroy(this);                                  //Уничтожаем этот модуль управления персонажем
-    }
-
    
     public void Figth(Enemy enemy)
     {
@@ -100,4 +90,12 @@ public class Player : MonoBehaviour
         //Запускаем анимацию получения урона если получили урон
     }
 
+    private IEnumerator Dead(float timeDeadAnim)
+    {
+        //...                                           //запускаем анимацию
+        yield return new WaitForSeconds(timeDeadAnim);  //ждем
+        Time.timeScale = 0;                             //Ставим игру на паузу
+        //...                                           //Запускаем меню "смерти"
+        //Destroy(this);                                  //Уничтожаем этот модуль управления персонажем
+    }
 }

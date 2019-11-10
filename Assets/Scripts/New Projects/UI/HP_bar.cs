@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HP_bar : MonoBehaviour
 {
-    public Player Player;
+    [SerializeField] Player Player;
     Text myText;
 
     void Start()
