@@ -3,27 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+ delegate void ActiveAttacked();
+
+public class Player : Actor
 {
-    [Header("Gameplay settings:")]
-    [SerializeField] int hp = 10;
-    [SerializeField] int dmg = 5;
+    //[Header("Gameplay settings:")]
+    //[SerializeField] int hp = 10;
+    public override int HP { get => hp;
+        set {
+            if (value <= 0) {
+                hp = 0;
+                StartCoroutine(Dead(0.1f));
+            } 
+            if( value < hp)
+            {
+                //Включаем анимацию получения урона
+                hp = value;
+            }
+            if (value > hp)
+            {
+                //Включаем анимацию хила
+                hp = value;
+            }
+        } 
+    }
 
     [Header("Character fade time settings:")]
     [SerializeField] float timer = 5.0f;
     [SerializeField] float eventTime = 2.0f;
     [SerializeField] int fadingDamage = 1;
     [SerializeField] float cooldownFadingDamage = 1;
+    private Coroutine poisionCoroutine = null;
+    bool activetedActionTimer = false; // должен быть изменён на булевский параметр у анматора отвучающий за анимацию.
 
-    bool activetedActionTimer = false; // должен быть изменён на булевский параметр у анматора отвучающий за анимацию. А этот метод должен быть удалён
-
-    public int HP { get => hp;  }
-    public int DMG { get => dmg; }
-    private static Coroutine poisionCoroutine = null;
+    ActiveAttacked Attacked;
 
     void Start()
     {
-
+        //Attacked = GetComponentInChildren<IAttack>().Attack;
     }
 
     void FixedUpdate()
@@ -31,9 +48,11 @@ public class Player : MonoBehaviour
         
     }
 
-    private void Update()
+    void Update()
     {
-        if (hp <= 0) StartCoroutine(Dead(0.1f));
+        if (SwipeManager.Instance.Tap) ; //Attacked();Debug.LogWarning("Tap!!")
+
+        //if (Hp <= 0) StartCoroutine(Dead(0.1f)); делаем это в сеттере
         CheckTimer();        
         CheckAnim();
 
@@ -61,9 +80,9 @@ public class Player : MonoBehaviour
     private IEnumerator PosionDamage()
     {
         Debug.LogWarning("Урон от нехватки колы раз в " + cooldownFadingDamage + " секунд!");   //включаем анимацию
-        while (hp > 0)
+        while (HP > 0)
         {
-            DamageMy(fadingDamage);
+            HP -= fadingDamage;
             Debug.LogError("Урон от нехватки колы - " + fadingDamage);
             yield return new WaitForSeconds(cooldownFadingDamage);
         }
@@ -77,25 +96,13 @@ public class Player : MonoBehaviour
             StopCoroutine(PosionDamage());
         }            
     }
-   
-    public void Figth(Enemy enemy)
+    
+   private IEnumerator Dead(float timeDeadAnim)
     {
-        hp -= enemy.DMG;
-        enemy.DamageMy(dmg);
-        //Запускаем анимацию получения урона если получили урон
-    }
-    public void DamageMy(int damage)
-    {
-        hp -= damage;
-        //Запускаем анимацию получения урона если получили урон
-    }
-
-    private IEnumerator Dead(float timeDeadAnim)
-    {
+        //...                                           //блокируем управление
         //...                                           //запускаем анимацию
-        yield return new WaitForSeconds(timeDeadAnim);  //ждем
+        yield return new WaitForSeconds(timeDeadAnim);  //ждем анимацию
         Time.timeScale = 0;                             //Ставим игру на паузу
         //...                                           //Запускаем меню "смерти"
-        //Destroy(this);                                  //Уничтожаем этот модуль управления персонажем
     }
 }

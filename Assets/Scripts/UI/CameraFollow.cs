@@ -7,7 +7,7 @@ public class CameraFollow : MonoBehaviour {
     [SerializeField] float smoothSpeed = 0.125f;
     [SerializeField] Vector3 offset;
 
-	void FixedUpdate ()
+	void LateUpdate ()
 	{
 		Vector3 desiredPosition = target.position + offset;
 		Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);

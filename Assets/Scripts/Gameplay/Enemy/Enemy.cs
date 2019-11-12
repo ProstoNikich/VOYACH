@@ -2,13 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Actor
 {
-    [Header("Settings gameplay:")]
-    [SerializeField] int hp = 10;
-    [SerializeField] int dmg = 5;
-    public int HP { get => hp; }
-    public int DMG { get => dmg; } //!!!
+    [SerializeField] float timeAnimDead = 0.1f;
+
+    public override int HP
+    {
+        get => hp;
+        set
+        {
+            if (value <= 0)
+            {
+                hp = 0;
+                StartCoroutine(Dead());
+            }
+            if (value < hp)
+            {
+                //Включаем анимацию получения урона
+                hp = value;
+            }
+            if (value > hp)
+            {
+                //Включаем анимацию хила
+                hp = value;
+            }
+        }
+    }
 
     protected void Start()
     {
@@ -16,17 +35,20 @@ public class Enemy : MonoBehaviour
 
     protected void Update()
     {
-        if (HP <= 0) Dead();
     }
 
-    protected virtual void Dead()
+    IEnumerator Dead()
     {
-        //Запускаем анимацию
-        Destroy(this.gameObject);
-    }
-    public void DamageMy(int damage)
-    {
-        hp -= damage;
-        //Запускаем анимацию получения урона если получили урон
-    }
+        //...                                           //запускаем анимацию
+        Destroy(GetComponent<Collider>());              //Уничтожаем коллайдер, что бы не взаимодействовать с объектом
+
+        foreach (Transform child in transform)          //Уничтожаем все прикреплённые компоненты, которым суждено умереть
+        {
+            if (child.tag == "DeadDestroy")
+                Destroy(child.gameObject);
+        }
+        
+        yield return new WaitForSeconds(timeAnimDead);  //ждем анимацию
+        Destroy(this.gameObject);                       //уничтожаем объект
+    }    
 }

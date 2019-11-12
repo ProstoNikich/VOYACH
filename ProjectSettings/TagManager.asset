@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Bonus
+  - DeadDestroy
   layers:
   - Default
   - TransparentFX

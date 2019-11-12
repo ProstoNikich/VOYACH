@@ -23,6 +23,7 @@ public class SwipeManager : MonoBehaviour
     private static SwipeManager instance;
     public static SwipeManager Instance { get { return instance; } }
     public bool SwipeOn { get; private set; }
+    public bool Tap { get; private set; }
 
     /// <summary>
     /// return StartSwipe - EndSwipe
@@ -52,6 +53,7 @@ public class SwipeManager : MonoBehaviour
         //Debug.Log(sensitivity + " height = " + Screen.height/sensitivity + "\nwidth = " + Screen.width/sensitivity);
         Direction = SwipeDirection.None;
         SwipeOn = false;
+        Tap = false;
         DeltaSwipe = Vector3.zero;
 
         if (Input.GetMouseButtonDown(0))
@@ -65,22 +67,22 @@ public class SwipeManager : MonoBehaviour
             //Debug.Log("Start x = " + startTouch.x + "\tStart y = " + startTouch.y);
             //Debug.Log("End x = " + endTouch.x + "\tEnd y = " + endTouch.y);
 
-
             //Определение свайпов влево, право, вверх, вниз
             if (Mathf.Abs(DeltaSwipe.x) > swipeResistanceX)
             {
-                //Свайп по X
                 SwipeOn = true;
+                //Свайп по X
                 Direction |= (DeltaSwipe.x < 0) ? SwipeDirection.Right : SwipeDirection.Left;
             }
             if (Mathf.Abs(DeltaSwipe.y) > swipeResistanceY)
             {
-                //Свайп по Y
                 SwipeOn = true;
+                //Свайп по Y
                 Direction |= (DeltaSwipe.y < 0) ? SwipeDirection.Up : SwipeDirection.Down;
             }
-
-
+            //if (SwipeOn) Tap = false;
+            //else Tap = true;
+            Tap = SwipeOn ? false : true;
         }
 
     }

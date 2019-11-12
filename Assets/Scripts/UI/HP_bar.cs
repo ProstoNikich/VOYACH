@@ -15,6 +15,6 @@ public class HP_bar : MonoBehaviour
 
     void Update()
     {
-        myText.text = "HP:" + Player.HP + " DMG:" + Player.DMG; //такая запись не продуктивна (конкатинация строк)
+        //myText.text = "HP:" + Player.HP + " DMG:" + Player.DMG; //такая запись не продуктивна (конкатинация строк)
     }
 }
