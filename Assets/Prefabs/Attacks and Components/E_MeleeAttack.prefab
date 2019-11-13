@@ -59,8 +59,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   infiniteTime: 0
   activityTime: 1
-  damage: 1
   targetTag: 1
+  damage: 1
+  forceMode: 0
+  force: 2500
+  x: 0
+  y: 0.5
+  z: -1
 --- !u!1 &3842957296831255621
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ public class E_MeleeAttack : AttackEvent
 {
     [SerializeField] int DMG = 1; 
     [SerializeField] float cooldown = 2.5f;
-    float cooldownTime = 2.5f;
+    float cooldownTime = 2.5f; //Поменять когда буду реф timer и cooldown
     DamageZone damage;
     GameObject damageZone;
 
@@ -18,6 +18,7 @@ public class E_MeleeAttack : AttackEvent
         damage.damage = DMG;
         damage.targetTag = TargetTag.Player;
         damageZone = damage.gameObject;
+        damage.gameObject.SetActive(false);
     }
 
     void Update()

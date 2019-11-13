@@ -7,8 +7,6 @@ using UnityEngine;
 
 public class Player : Actor
 {
-    //[Header("Gameplay settings:")]
-    //[SerializeField] int hp = 10;
     public override int HP { get => hp;
         set {
             if (value <= 0) {
@@ -36,11 +34,12 @@ public class Player : Actor
     private Coroutine poisionCoroutine = null;
     bool activetedActionTimer = false; // должен быть изменён на булевский параметр у анматора отвучающий за анимацию.
 
-    ActiveAttacked Attacked;
+    //ActiveAttacked Attacked;
+    Rigidbody myRigidbody;
 
     void Start()
     {
-        //Attacked = GetComponentInChildren<IAttack>().Attack;
+        myRigidbody = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
