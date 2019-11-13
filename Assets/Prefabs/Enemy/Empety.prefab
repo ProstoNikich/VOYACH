@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5462670282551095312}
   - component: {fileID: 5462670282551095313}
   m_Layer: 0
-  m_Name: EmpetyEnemy
+  m_Name: Empety
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,4 +146,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 10
-  timeAnimDead: 0.1
+  timeAnimDead: 3

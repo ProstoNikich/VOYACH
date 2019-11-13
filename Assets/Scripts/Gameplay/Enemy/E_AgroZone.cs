@@ -10,9 +10,13 @@ public class E_AgroZone : MonoBehaviour
     [SerializeField] bool moveToPlayer = true;
     [SerializeField] bool clearTargetOnExit = false;
     [SerializeField] float stopDistance = 2.1f;
+       
+    public bool IsAgred { get; private set; }
+
     void Start()
     {
         navMeshAgent = GetComponentInParent<NavMeshAgent>();
+        IsAgred = false;
     }
 
     void Update()
@@ -39,12 +43,18 @@ public class E_AgroZone : MonoBehaviour
     {
         if (other.tag == "Player") { 
             target = other.GetComponent<Transform>();
-            if(moveToPlayer) navMeshAgent.isStopped = false;
+            if (moveToPlayer) {
+                navMeshAgent.isStopped = false;
+                IsAgred = true;
+            }
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (clearTargetOnExit) target = null;
+        if (clearTargetOnExit) {
+            target = null;
+            IsAgred = false;
+        }
     }
     void CorrectRotation()
     {
