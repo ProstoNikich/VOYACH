@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8924918894839102504}
   - component: {fileID: 8924918894839102505}
   m_Layer: 0
-  m_Name: AgroZone
+  m_Name: E_AgroZone
   m_TagString: DeadDestroy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,3 +58,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveToPlayer: 1
+  stopDistance: 2.1
