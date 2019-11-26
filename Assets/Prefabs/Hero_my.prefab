@@ -76,6 +76,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hero_my
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 12ffb61a504bc4c43a6e4f55afa27439,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: -6057140222963153312, guid: 12ffb61a504bc4c43a6e4f55afa27439,
         type: 3}
       propertyPath: m_Controller
