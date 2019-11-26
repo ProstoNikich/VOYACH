@@ -415,7 +415,7 @@ GameObject:
   - component: {fileID: 979468612282041986}
   m_Layer: 0
   m_Name: Hero
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -445,7 +445,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9130529916636678656}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 73cf04bc69e0b1946a5d54868b9b62e9, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 12ffb61a504bc4c43a6e4f55afa27439, type: 3}
   m_Controller: {fileID: 9100000, guid: b99d3ebbd84683a42b450be5c59f0285, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0

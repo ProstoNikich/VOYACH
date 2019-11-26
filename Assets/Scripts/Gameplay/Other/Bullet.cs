@@ -10,9 +10,9 @@ public class Bullet : MonoBehaviour
 {
     Rigidbody m_Rigidbody;
     [SerializeField] float m_Speed = 1.0f;
-    [SerializeField] float deadDelay = 0.1f;
-    [SerializeField] bool infinityLive = true;
+    [SerializeField] float timeAnimDead = 0.1f;
     [SerializeField] float timeLive = 300f;
+    [SerializeField] bool infinityLive = true;
     DamageZone damageZone;
 
     void Start()
@@ -41,7 +41,7 @@ public class Bullet : MonoBehaviour
     IEnumerator Dead()
     {
         //Запускаем анимацию
-        yield return new WaitForSeconds(deadDelay);
+        yield return new WaitForSeconds(timeAnimDead);
         Destroy(this.gameObject);
     }
 

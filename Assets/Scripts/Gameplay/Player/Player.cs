@@ -3,17 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
- delegate void ActiveAttacked();
+//delegate void ActiveAttacked();
 
 public class Player : Actor
 {
-    public override int HP { get => hp;
-        set {
-            if (value <= 0) {
+    public override int HP
+    {
+        get => hp;
+        set
+        {
+            if (value <= 0)
+            {
                 hp = 0;
                 StartCoroutine(Dead(0.1f));
-            } 
-            if( value < hp)
+            }
+            if (value < hp)
             {
                 //Включаем анимацию получения урона
                 hp = value;
@@ -23,7 +27,7 @@ public class Player : Actor
                 //Включаем анимацию хила
                 hp = value;
             }
-        } 
+        }
     }
 
     [Header("Character fade time settings:")]
@@ -32,29 +36,47 @@ public class Player : Actor
     [SerializeField] int fadingDamage = 1;
     [SerializeField] float cooldownFadingDamage = 1;
     private Coroutine poisionCoroutine = null;
+
+
+    Animator animator;
     bool activetedActionTimer = false; // должен быть изменён на булевский параметр у анматора отвучающий за анимацию.
+
+    bool animMove = false;
 
     //ActiveAttacked Attacked;
     Rigidbody myRigidbody;
 
-    void Start()
+    void Awake()
     {
         myRigidbody = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
     {
-        
+
     }
 
     void Update()
     {
-        if (SwipeManager.Instance.Tap) ; //Attacked();Debug.LogWarning("Tap!!")
+        if (SwipeManager.Instance.Tap) ; //Attacked();Debug.LogWarning("Tap!!") ???
+
+        if (SwipeManager.Instance.SwipeOn && !animMove) StartCoroutine(MoveAnim());
 
         //if (Hp <= 0) StartCoroutine(Dead(0.1f)); делаем это в сеттере
-        CheckTimer();        
+        CheckTimer();
         CheckAnim();
 
+    }
+
+    private IEnumerator MoveAnim()
+    {
+        animMove = true;
+        animator.SetBool("Move", true);
+        yield return new WaitUntil(() => myRigidbody.velocity != Vector3.zero);
+        yield return new WaitUntil(() => myRigidbody.velocity == Vector3.zero);
+        animMove = false;
+        animator.SetBool("Move", false);
     }
 
     /// <summary>
@@ -71,7 +93,7 @@ public class Player : Actor
         timer -= Time.deltaTime;
         if (timer <= eventTime) activetedActionTimer = true;
         else activetedActionTimer = false;
-        if (poisionCoroutine == null && timer <= 0.0f ) 
+        if (poisionCoroutine == null && timer <= 0.0f)
             poisionCoroutine = StartCoroutine(PosionDamage());
         else if (poisionCoroutine != null && timer > 0) StopPoisionCoroutine();
     }
@@ -93,10 +115,10 @@ public class Player : Actor
         {
             poisionCoroutine = null;
             StopCoroutine(PosionDamage());
-        }            
+        }
     }
-    
-   private IEnumerator Dead(float timeDeadAnim)
+
+    private IEnumerator Dead(float timeDeadAnim)
     {
         //...                                           //блокируем управление
         //...                                           //запускаем анимацию
