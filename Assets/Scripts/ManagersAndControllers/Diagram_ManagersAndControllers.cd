@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ManagerLevels">
+    <Position X="3" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAABAEAkAAAAAAAAgEAgAAAAAAAAAAAAABEAQAAAgEA=</HashCode>
+      <FileName>Assets\Scripts\ManagersAndControllers\ManagerLevels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ManegerEnemy">
+    <Position X="5.25" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAQAAAAAABAAAAgIAAAEA=</HashCode>
+      <FileName>Assets\Scripts\ManagersAndControllers\ManegerEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwipeControll">
+    <Position X="12" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAgAAGAAAAAAAAAAAAIAQAQAAAAAAAAABAAAAAg=</HashCode>
+      <FileName>Assets\Scripts\ManagersAndControllers\SwipeControll.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwipeManager">
+    <Position X="7.25" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QIQAACAEACBoAAAAACAAAAAAAABIIAAAQQAQAKAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ManagersAndControllers\SwipeManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Direction" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="SwipeDirection">
+    <Position X="10.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAACACAAAEAAAI=</HashCode>
+      <FileName>Assets\Scripts\ManagersAndControllers\SwipeManager.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

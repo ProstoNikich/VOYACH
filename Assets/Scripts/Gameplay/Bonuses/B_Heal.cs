@@ -2,14 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class B_Heal : MonoBehaviour, IBonus
+public class B_Heal : MonoBehaviour
 {
-    public int addHP = 2;
+    [SerializeField] int addHP = 2;
+    [SerializeField] float addTimer = 30;
+    [SerializeField] ParticleSystem ParticleSystem;
+    private MeshRenderer meshRenderer;
+    bool active = true;
 
-    public void ActivateBonus(Player target)
+    private void Start()
     {
-        //target.HP += addHP;
-        Debug.Log(this.gameObject.name + " - Бонус активирован!! ");
+        if(ParticleSystem.isPlaying) ParticleSystem.Stop();
+        meshRenderer = GetComponent<MeshRenderer>();
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player") && active)
+        {
+            Player player = other.GetComponent<Player>();
+            player.HP += addHP;
+            player.Timer += addTimer;
+            active = false;
+            ParticleSystem.Play();
+            StartCoroutine(Dead());
+        }
+    }
+    IEnumerator Dead()
+    {
+        meshRenderer.enabled = false;
+        yield return new WaitWhile(()=>ParticleSystem.isPlaying);
         Destroy(this.gameObject);
     }
 }

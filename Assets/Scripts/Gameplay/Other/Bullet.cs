@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-///  Снаряд летящий в перед по оси Z, наносит урон при столкновении и самоуничтожается
-/// </summary>
 [System.Serializable]
 public class Bullet : MonoBehaviour
 {
@@ -23,7 +20,7 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        m_Rigidbody.velocity = transform.forward * m_Speed; //а не в FixedUpdate() ?
+        m_Rigidbody.velocity = transform.forward * m_Speed; 
     }
     private void Update()
     {
@@ -32,15 +29,12 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        //if (other.CompareTag(damageZone.targetTag.ToString()))
-        //    StartCoroutine(Dead());
         if (other.CompareTag(damageZone.targetTag.ToString()) || other.CompareTag("Untagged"))
             StartCoroutine(Dead());
     }
 
     IEnumerator Dead()
     {
-        //Запускаем анимацию
         yield return new WaitForSeconds(timeAnimDead);
         Destroy(this.gameObject);
     }

@@ -2,28 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class E_MeleeAttack : AttackEvent
+public class E_MeleeAttack : MonoBehaviour
 {
     [SerializeField] int DMG = 1; 
     [SerializeField] float cooldown = 2.5f;
-    float cooldownTime = 2.5f; //Поменять когда буду реф timer и cooldown
-    DamageZone damage;
-    GameObject damageZone;
+    float cooldownTime = 2.5f;
+    DamageZone damageZone;
+    GameObject damageZoneObject;
 
     void Start()
     {
         cooldownTime = cooldown;
         cooldown = 0;
-        damage = GetComponentInChildren<DamageZone>();
-        damage.damage = DMG;
-        damage.targetTag = TargetTag.Player;
-        damageZone = damage.gameObject;
-        damage.gameObject.SetActive(false);
+        damageZone = GetComponentInChildren<DamageZone>();
+        damageZone.damage = DMG;
+        damageZone.targetTag = TargetTag.Player;
+        damageZoneObject = damageZone.gameObject;
+        damageZone.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        if(damage.damage != DMG) damage.damage = DMG;
+        if(damageZone.damage != DMG) damageZone.damage = DMG;
         if (cooldown > 0) cooldown -= Time.deltaTime;
     }
 
@@ -36,10 +36,10 @@ public class E_MeleeAttack : AttackEvent
         if (cooldown <= 0 && other.tag == "Player") Attack();
     }
 
-    public override void Attack()
+    public void Attack()
     {
         if (cooldown > 0) return;
-        damageZone.SetActive(true);
+        damageZoneObject.SetActive(true);
         cooldown = cooldownTime;
     }
 }

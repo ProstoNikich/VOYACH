@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : Actor
 {
     [SerializeField] float timeAnimDead = 0.1f;
+    [SerializeField] ParticleSystem damageParticleSystem;
 
     public override int HP
     {
@@ -18,12 +19,11 @@ public class Enemy : Actor
             }
             if (value < hp)
             {
-                //Включаем анимацию получения урона
+                if (damageParticleSystem != null) damageParticleSystem.Play();
                 hp = value;
             }
             if (value > hp)
             {
-                //Включаем анимацию хила
                 hp = value;
             }
         }
@@ -31,6 +31,8 @@ public class Enemy : Actor
 
     protected void Start()
     {
+       if(damageParticleSystem != null && damageParticleSystem.isPlaying) damageParticleSystem.Stop();
+        ManegerEnemy.instanse?.AddMy(this);
     }
 
     protected void Update()
@@ -39,16 +41,16 @@ public class Enemy : Actor
 
     IEnumerator Dead()
     {
-        //...                                           //запускаем анимацию
-        Destroy(GetComponent<Collider>());              //Уничтожаем коллайдер, что бы не взаимодействовать с объектом
-
-        foreach (Transform child in transform)          //Уничтожаем все прикреплённые компоненты, которым суждено умереть
+        ManegerEnemy.instanse?.DeleteMy(this);
+        Destroy(GetComponent<Collider>());              
+        foreach (Transform child in transform)          
         {
             if (child.tag == "DeadDestroy")
                 Destroy(child.gameObject);
         }
         
-        yield return new WaitForSeconds(timeAnimDead);  //ждем анимацию
-        Destroy(this.gameObject);                       //уничтожаем объект
-    }    
+        yield return new WaitForSeconds(timeAnimDead); 
+        Destroy(this.gameObject);
+    }
+    
 }

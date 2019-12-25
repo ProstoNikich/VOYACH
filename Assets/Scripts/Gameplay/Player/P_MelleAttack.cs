@@ -2,34 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class P_MelleAttack : AttackEvent
+public class P_MelleAttack : MonoBehaviour
 {
     [SerializeField] int DMG = 1;
     [SerializeField] float cooldown = 2.5f;
     float timerCD = 2.5f;
-    DamageZone damage;
-    GameObject damageZone;
+    DamageZone damageZone;
+    GameObject damageZoneObject;
 
     void Start()
     {
         timerCD = 0;
-        damage = GetComponentInChildren<DamageZone>();
-        damage.damage = DMG;
-        damage.targetTag = TargetTag.Enemy;
-        damageZone = damage.gameObject;
-        damage.gameObject.SetActive(false);
+        damageZone = GetComponentInChildren<DamageZone>();
+        damageZone.damage = DMG;
+        damageZone.targetTag = TargetTag.Enemy;
+        damageZoneObject = damageZone.gameObject;
+        damageZone.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        if (damage.damage != DMG) damage.damage = DMG;
+        if (damageZone.damage != DMG) damageZone.damage = DMG;
         if (timerCD > 0) timerCD -= Time.deltaTime;
         if (SwipeManager.Instance.Tap && timerCD <= 0) Attack();
     }
-    public override void Attack()
+    public void Attack()
     {
         if (timerCD > 0) return;
-        damageZone.SetActive(true);
+        damageZoneObject.SetActive(true);
         timerCD = cooldown;
     }
 }

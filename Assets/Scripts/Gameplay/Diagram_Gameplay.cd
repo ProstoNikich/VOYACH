@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="Переменная bullet хранит префаб на игровой обьект с настроенным классом Bullet">
+    <Position X="5.115" Y="3.51" Height="0.875" Width="1.7" />
+  </Comment>
+  <Class Name="B_Heal">
+    <Position X="7" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAgAAAACAAABAAAAAACAIAAAAAAAAAAAAAKAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Bonuses\B_Heal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="E_AgroZone" Collapsed="true">
+    <Position X="1.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQAAAAAACAAAAAAIAAAACAAgAAAAIAAQQACEAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Enemy\E_AgroZone.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="E_MeleeAttack" Collapsed="true">
+    <Position X="4.25" Y="1.5" Width="1.5" />
+    <AssociationLine Name="damageZone" Type="DamageZone">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="4.481" Y="0.914" Height="0.182" Width="1.288" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAADCAIAIAAAAAAKAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Enemy\E_MeleeAttack.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="damageZone" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="E_Patrols" Collapsed="true">
+    <Position X="1.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAICAACAECAAAAAAAAAAAAAAAAAAIAAACACAEIAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Enemy\E_Patrols.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="agroZone" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="E_RangeAttack" Collapsed="true">
+    <Position X="4.25" Y="2.75" Width="1.5" />
+    <AssociationLine Name="bullet" Type="UnityEngine.GameObject">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.12" Y="0.757" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAiAAAAAAAAAAAAAAAIAAAAAAIBAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Enemy\E_RangeAttack.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="agroZone" />
+      <Field Name="bullet" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Bullet">
+    <Position X="2.5" Y="4.25" Width="1.5" />
+    <AssociationLine Name="damageZone" Type="DamageZone" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="7" />
+        <Point X="10.875" Y="7" />
+        <Point X="10.875" Y="3.691" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="5.644" Y="2.971" Height="0.182" Width="1.098" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>CAQAAAAAAigAAAAAIAAAAAIEAAAAAgAAQAAACAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Other\Bullet.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="damageZone" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DamageZone" Collapsed="true">
+    <Position X="10.75" Y="3" Width="1.5" />
+    <AssociationLine Name="targetTag" Type="TargetTag">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.122" Y="0.779" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>EA4AAAAAAAIAgBBAAAAAAgIAACAAAAAAQAAABAAACEA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Other\DamageZone.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="targetTag" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DeadZone">
+    <Position X="8.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Other\DeadZone.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pinwheel" Collapsed="true">
+    <Position X="14.5" Y="3" Width="1.5" />
+    <AssociationLine Name="direction" Type="Direction">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.994" Y="0.781" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAIAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Other\Pinwheel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="direction" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Teleport" Collapsed="true">
+    <Position X="12.75" Y="3" Width="1.5" />
+    <AssociationLine Name="targetTag" Type="TargetTag">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-1.042" Y="0.817" Height="0.182" Width="0.875" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAJBIAACAAAAQAAAAAIAASEAAAAAIAEA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Other\Teleport.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="targetTag" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="P_MelleAttack" Collapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <AssociationLine Name="damageZone" Type="DamageZone">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.796" Y="0.71" Height="0.182" Width="1.079" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACQAAACAIAIAAAAAAKAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Player\P_MelleAttack.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="damageZone" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="P_MoveAttack" Collapsed="true">
+    <Position X="11.5" Y="1.5" Width="1.5" />
+    <AssociationLine Name="damageZone" Type="DamageZone">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-1.207" Y="0.572" Height="0.182" Width="1.084" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAQAAAAgAiAAAACAIAIAAAAAAIAAAAgAAAEAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Player\P_MoveAttack.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="damageZone" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Enemy" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQAEAAAACAAAAAAAAAAAAAAQAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Enemy\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BpVAEAAAQiAAAAAAAAAgAAAAQMAASACAgAIACAIEAEA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Player\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityEngine.GameObject" Collapsed="true">
+    <Position X="4.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Actor">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Other\Actor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="TargetTag">
+    <Position X="12" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAQAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Other\DamageZone.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Direction">
+    <Position X="14.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Gameplay\Other\Pinwheel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

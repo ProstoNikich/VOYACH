@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class E_RangeAttack : AttackEvent
+public class E_RangeAttack : MonoBehaviour
 {
     [SerializeField] GameObject bullet;
     [SerializeField] float cooldownAttack = 2.5f;
@@ -28,7 +28,7 @@ public class E_RangeAttack : AttackEvent
         }
     }
 
-    public override void Attack()
+    public void Attack()
     {
         Instantiate(bullet, transform.position, transform.rotation);
         timer = cooldownAttack;

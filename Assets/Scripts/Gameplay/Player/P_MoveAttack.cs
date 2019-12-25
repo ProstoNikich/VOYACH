@@ -2,47 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class P_MoveAttack : AttackEvent
+public class P_MoveAttack : MonoBehaviour
 {
     [SerializeField] int DMG = 1;
-    DamageZone damage;
-    GameObject damageZone;
+    DamageZone damageZone;
+    GameObject damageZoneObject;
 
     Rigidbody rigidbodyParent;
     Vector3 prePosition;
     void Start()
     {
         rigidbodyParent = transform.parent.GetComponent<Rigidbody>();
-        damage = GetComponentInChildren<DamageZone>();
-        damage.damage = DMG;
-        damage.targetTag = TargetTag.Enemy;
-        damageZone = damage.gameObject;
-        damage.gameObject.SetActive(false);
-    }
-    private void FixedUpdate()
-    {
-        //if(rigidbodyParent.velocity != Vector3.zero) damageZone.SetActive(true);
-        //else damageZone.SetActive(false);
+        damageZone = GetComponentInChildren<DamageZone>();
+        damageZone.damage = DMG;
+        damageZone.targetTag = TargetTag.Enemy;
+        damageZoneObject = damageZone.gameObject;
+        damageZone.gameObject.SetActive(false);
     }
     void Update()
     {
-        if (damageZone.activeSelf && damage.damage != DMG) damage.damage = DMG;
-
-        //Есть аналогичная реализация серез FixedUpdate (стр 24-25).
-        //Но эта должна быть менее затратной и более стабильной, по этому необходимо тестирование этих методов
-        if (SwipeManager.Instance.SwipeOn) Attack();
+        if (damageZoneObject.activeSelf && damageZone.damage != DMG) damageZone.damage = DMG;
+        if (SwipeManager.Instance != null && SwipeManager.Instance.SwipeOn) Attack();
     }
-    public override void Attack()
+    public void Attack()
     {
         StartCoroutine(CorutinAttack());
     }
     IEnumerator CorutinAttack()
     {
-        //Debug.Log("Move start");
-        damageZone.SetActive(true);
+        damageZoneObject.SetActive(true);
         yield return new WaitUntil(() => rigidbodyParent.velocity != Vector3.zero);
         yield return new WaitUntil(() => rigidbodyParent.velocity == Vector3.zero);
-        damageZone.SetActive(false);
-        //Debug.Log("Move end");
+        damageZoneObject.SetActive(false);
     }
 }

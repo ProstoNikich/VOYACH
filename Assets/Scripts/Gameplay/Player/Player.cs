@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//delegate void ActiveAttacked();
-
 public class Player : Actor
 {
     public override int HP
@@ -15,20 +13,25 @@ public class Player : Actor
             if (value <= 0)
             {
                 hp = 0;
-                StartCoroutine(Dead(0.1f));
+                StartCoroutine(Dead());
             }
             if (value < hp)
             {
-                //Включаем анимацию получения урона
-                hp = value;
+                if(damageParticleSystem!=null) damageParticleSystem.Play();
+                 hp = value;
             }
             if (value > hp)
             {
-                //Включаем анимацию хила
-                hp = value;
+                if (value >= 3) hp = 3;
+                else hp = value;
             }
         }
     }
+
+    [SerializeField] float timeToDeadScreen = 2.0f;
+    [SerializeField] GameObject deadPanel;
+    [SerializeField] ParticleSystem damageParticleSystem;
+
 
     [Header("Character fade time settings:")]
     [SerializeField] float timer = 5.0f;
@@ -36,20 +39,25 @@ public class Player : Actor
     [SerializeField] int fadingDamage = 1;
     [SerializeField] float cooldownFadingDamage = 1;
     private Coroutine poisionCoroutine = null;
-
+    public float Timer { get => timer; set => timer = value; }
+    public float TimeToDeadScreen { get => timeToDeadScreen; }
+    public float TimerTimeToDeadScreen { get; set; }
 
     Animator animator;
-    bool activetedActionTimer = false; // должен быть изменён на булевский параметр у анматора отвучающий за анимацию.
+    bool activetedActionTimer = false;
 
     bool animMove = false;
 
-    //ActiveAttacked Attacked;
     Rigidbody myRigidbody;
 
     void Awake()
     {
         myRigidbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+    }
+    private void Start()
+    {
+        if (damageParticleSystem != null) damageParticleSystem.Stop();
     }
 
     void FixedUpdate()
@@ -59,14 +67,11 @@ public class Player : Actor
 
     void Update()
     {
-        if (SwipeManager.Instance.Tap) ; //Attacked();Debug.LogWarning("Tap!!") ???
+        if (SwipeManager.Instance != null) 
+            if (SwipeManager.Instance.SwipeOn && !animMove) StartCoroutine(MoveAnim());
 
-        if (SwipeManager.Instance.SwipeOn && !animMove) StartCoroutine(MoveAnim());
-
-        //if (Hp <= 0) StartCoroutine(Dead(0.1f)); делаем это в сеттере
         CheckTimer();
         CheckAnim();
-
     }
 
     private IEnumerator MoveAnim()
@@ -79,13 +84,9 @@ public class Player : Actor
         animator.SetBool("Move", false);
     }
 
-    /// <summary>
-    /// Данный метод служит "заглушкой" отсутствующей анимации. В дальнейм параметр bool activetedActionTimer 
-    /// должен быть изменён на булевский параметр у анматора отвучающий за анимацию. А этот метод должен быть удалён
-    /// </summary>
     private void CheckAnim()
     {
-        if (activetedActionTimer) Debug.LogWarning("Скоро получишь урон");                        //включаем анимацию
+        if (activetedActionTimer) Debug.LogWarning("Скоро получишь урон");
     }
 
     void CheckTimer()
@@ -95,12 +96,12 @@ public class Player : Actor
         else activetedActionTimer = false;
         if (poisionCoroutine == null && timer <= 0.0f)
             poisionCoroutine = StartCoroutine(PosionDamage());
-        else if (poisionCoroutine != null && timer > 0) StopPoisionCoroutine();
+        if (poisionCoroutine != null && timer > 0) StopPoisionCoroutine();
     }
 
     private IEnumerator PosionDamage()
     {
-        Debug.LogWarning("Урон от нехватки колы раз в " + cooldownFadingDamage + " секунд!");   //включаем анимацию
+        Debug.LogWarning("Урон от нехватки колы раз в " + cooldownFadingDamage + " секунд!");
         while (HP > 0)
         {
             HP -= fadingDamage;
@@ -110,20 +111,20 @@ public class Player : Actor
     }
     private void StopPoisionCoroutine()
     {
-        Debug.LogWarning("Таймер обновлен! \nПерестаём получать урон.");                        //Отключаем анимацию PosionDamage()
+        Debug.LogWarning("Таймер обновлен! \nПерестаём получать урон.");
         if (poisionCoroutine != null)
         {
+            StopCoroutine(poisionCoroutine);
             poisionCoroutine = null;
-            StopCoroutine(PosionDamage());
         }
     }
 
-    private IEnumerator Dead(float timeDeadAnim)
+    private IEnumerator Dead()
     {
-        //...                                           //блокируем управление
-        //...                                           //запускаем анимацию
-        yield return new WaitForSeconds(timeDeadAnim);  //ждем анимацию
-        Time.timeScale = 0;                             //Ставим игру на паузу
-        //...                                           //Запускаем меню "смерти"
+        SwipeControll.blocked = true;
+        if(animator != null) animator.SetBool("Death", true);
+        yield return new WaitForSeconds(timeToDeadScreen);        
+        Time.timeScale = 0;
+        if (deadPanel != null) deadPanel.SetActive(true);
     }
 }

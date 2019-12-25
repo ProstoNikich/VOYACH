@@ -70,9 +70,11 @@ public class DamageZone : MonoBehaviour
     {
         if (damageOnStay) timerCooldown = cooldown;
         Rigidbody rigidbody = other.GetComponent<Rigidbody>();
-        Vector3 direction = other.transform.position - transform.position;
-        rigidbody.velocity = Vector3.zero;
-        rigidbody.AddForceAtPosition((direction.normalized + Vector3.up * deviationY) * force, other.transform.position);
+        if (rigidbody != null) { 
+            Vector3 direction = other.transform.position - transform.position;
+            rigidbody.velocity = Vector3.zero;
+            rigidbody.AddForceAtPosition((direction.normalized + Vector3.up * deviationY) * force, other.transform.position);
+        }
         other.GetComponent<Actor>().HP -= damage;
     }
 
